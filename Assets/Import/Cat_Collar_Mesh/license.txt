@@ -1,0 +1,11 @@
+Model Information:
+* title:	Cat_Collar_Mesh
+* source:	https://sketchfab.com/3d-models/cat-collar-mesh-4efdc98ca25d4a849ee97742eca40123
+* author:	sophie.j.holt (https://sketchfab.com/sophie.j.holt)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Cat_Collar_Mesh" (https://sketchfab.com/3d-models/cat-collar-mesh-4efdc98ca25d4a849ee97742eca40123) by sophie.j.holt (https://sketchfab.com/sophie.j.holt) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
