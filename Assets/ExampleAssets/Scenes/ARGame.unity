@@ -566,6 +566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 0}
   chat: {fileID: 0}
+  lost: {fileID: 0}
   text1: {fileID: 0}
   text2: {fileID: 0}
   dog: {fileID: 0}
@@ -1292,7 +1293,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 885, y: -67}
+  m_AnchoredPosition: {x: 771, y: -86}
   m_SizeDelta: {x: 640.1, y: 703.30005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &483293759
