@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR.ARFoundation;
 public class SpawnManager : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class SpawnManager : MonoBehaviour
     public GameObject step1;
     public GameObject step2;
     public GameObject step3;
+    public GameObject lower;
+    public GameObject slow;
+    public GameObject hide;
     public bool step1Complete = false;
     public bool step2Complete = false;
     public bool step3Complete = false;
@@ -31,6 +35,9 @@ public class SpawnManager : MonoBehaviour
     public bool pawStart = false;
     public bool objectSpawned = false;
     public bool oneObject = false;
+    public bool lowers = false;
+    public bool slows = false;
+    public bool hides = false;
     public Camera player;
     public float height;
     
@@ -45,40 +52,44 @@ public class SpawnManager : MonoBehaviour
         /*faceManager.enabled = false;
         planeManager.enabled = true;
         m_RayCastManager.enabled = true;*/
+        StartCoroutine(Lower());
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount == 0)
-            return;
-
-        RaycastHit hit;
-        Ray ray = arCam.ScreenPointToRay(Input.GetTouch(0).position);
-
-        if (m_RayCastManager.Raycast(Input.GetTouch(0).position, m_hits))
+        if (!oneObject)
         {
-            if (Input.GetTouch(0).phase == TouchPhase.Began && spawnedObject == null && oneObject == false)
+            if (Input.touchCount == 0)
+                return;
+
+            RaycastHit hit;
+            Ray ray = arCam.ScreenPointToRay(Input.GetTouch(0).position);
+
+            if (m_RayCastManager.Raycast(Input.GetTouch(0).position, m_hits))
             {
-                if (Physics.Raycast(ray, out hit))
+                if (Input.GetTouch(0).phase == TouchPhase.Began && spawnedObject == null)
                 {
-                    if (hit.collider.gameObject.tag == "Spawnable")
+                    if (Physics.Raycast(ray, out hit))
                     {
-                        spawnedObject = hit.collider.gameObject;
-                    
-                    }
-                    else
-                    {
-                        SpawnPrefab(m_hits[0].pose.position);
-                        oneObject = true;
+                        if (hit.collider.gameObject.tag == "Spawnable")
+                        {
+                            spawnedObject = hit.collider.gameObject;
+
+                        }
+                        else
+                        {
+                            SpawnPrefab(m_hits[0].pose.position);
+                        }
                     }
                 }
             }
         }
-        else if(Input.GetTouch(0).phase == TouchPhase.Moved && spawnedObject != null)
+        else if (Input.GetTouch(0).phase == TouchPhase.Moved && spawnedObject != null)
         {
             spawnedObject.transform.position = m_hits[0].pose.position;
-         
+
         }
         if (Input.GetTouch(0).phase == TouchPhase.Ended)
         {
@@ -101,14 +112,29 @@ public class SpawnManager : MonoBehaviour
             pawStart = true;
             StartCoroutine(Step2());
         }
- 
-
+        if (lowers == true)
+        {
+            lower.SetActive(false);
+            StartCoroutine(Slow());
         }
+        if (slows == true)
+        {
+            slow.SetActive(false);
+            StartCoroutine(Hide());
+        }
+        if (slows == true)
+        {
+            hide.SetActive(false);
+        }
+
+
+    }
     private void SpawnPrefab(Vector3 spawnPos)
     {
         spawnedObject = Instantiate(spawnObject, spawnPos, Quaternion.identity);
         objectSpawned = true;
         step1Start = true;
+        oneObject = true;
         
         //spawnedObject = Instantiate(textInstructions, spawnPos, Quaternion.identity);
     }
@@ -119,6 +145,7 @@ public class SpawnManager : MonoBehaviour
             spawnedObject.SetActive(false);
             yield return new WaitForSeconds(30);
         }
+
     }
     IEnumerator Step2()
     {
@@ -150,5 +177,27 @@ public class SpawnManager : MonoBehaviour
             camManager.requestedFacingDirection = CameraFacingDirection.User;
             Debug.Log(camManager.currentFacingDirection);
         }
+    }
+    public void TrainBack()
+    {
+        SceneManager.LoadScene("StartMenu");
+    }
+    IEnumerator Lower()
+    {
+        lower.SetActive(true);
+        lowers = true;
+        yield return new WaitForSeconds(10);
+    }
+    IEnumerator Slow()
+    {
+        slow.SetActive(true);
+        slows = true;
+        yield return new WaitForSeconds(10);
+    }
+    IEnumerator Hide()
+    {
+        hide.SetActive(true);
+        hides = true;
+        yield return new WaitForSeconds(10);
     }
 }
